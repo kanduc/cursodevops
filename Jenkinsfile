@@ -2,10 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Initialize'){
-            def dockerHome = tool 'docker'
-            env.PATH = "${dockerHome}/bin:${env.PATH}"
-        }
 
         stage('Install Dependencies') {
             agent {
@@ -42,7 +38,7 @@ pipeline {
                 stage('NPMAudit-Scan') {
                     agent {
                         docker {
-                            image 'node:16-alpine'
+                            image 'node:18-alpine'
                             args '-u root:root -v ${WORKSPACE}:/src'
                         }
                     }                    
