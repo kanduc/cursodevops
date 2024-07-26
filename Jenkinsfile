@@ -3,6 +3,20 @@ pipeline {
 
     stages {
 
+        stage('Install Dependencies') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    args '-u root:root'
+                }
+            }
+            steps {
+                script {
+                    sh 'npm install'
+                }
+            }
+        }
+
         stage('Security SAST') {
             parallel {
                 stage('Gitleaks-Scan') {
