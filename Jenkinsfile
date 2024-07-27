@@ -120,6 +120,7 @@ pipeline {
         stage('Docker Push') {
             steps {
                 script {
+                    echo "hola"
                     //sh '''
                     //    docker login -u $DOCKER_HUB_LOGIN_USR -p $DOCKER_HUB_LOGIN_PSW
                     //    docker push $REGISTRY/$REPO:$VERSION
