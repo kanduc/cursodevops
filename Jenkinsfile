@@ -3,7 +3,7 @@ pipeline {
 
     stages {
 
-        stage('Install Dependencies') {
+        /*stage('Install Dependencies') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -15,7 +15,7 @@ pipeline {
                     sh 'npm install'
                 }
             }
-        }
+        }*/
 
         //stage('Security SAST') {
          //   parallel {
@@ -31,7 +31,7 @@ pipeline {
                             script {
                                 sh "gitleaks detect --verbose --source . -f json -r report_gitleaks.json"
                                 sh "ls -la"
-                                archiveArtifacts artifacts: "report_gitleaks.json"
+                                //archiveArtifacts artifacts: "report_gitleaks.json"
                                 stash includes: 'report_gitleaks.json', name: 'report_gitleaks.json'
                             }
                         }
@@ -48,8 +48,8 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             script {
                                 sh "npm audit --registry=https://registry.npmjs.org -audit-level=moderate --json > report_npmaudit.json"
-                                archiveArtifacts artifacts: "report_npmaudit.json"
-                                //stash includes: 'report_npmaudit.json', name: 'report_npmaudit.json'
+                                //archiveArtifacts artifacts: "report_npmaudit.json"
+                                stash includes: 'report_npmaudit.json', name: 'report_npmaudit.json'
                             }
                         }
                     }
@@ -64,9 +64,9 @@ pipeline {
                     steps {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             script {
-                                sh "semgrep ci --json --exclude=package-lock.json --output /src/report_semgrep.json --config auto --config p/ci"
-                                //stash includes: 'report_semgrep.json', name: 'report_semgrep.json'
-                                archiveArtifacts artifacts: "/src/report_semgrep.json"
+                                sh "semgrep ci --json --exclude=package-lock.json --output report_semgrep.json --config auto --config p/ci"
+                                stash includes: 'report_semgrep.json', name: 'report_semgrep.json'
+                                //archiveArtifacts artifacts: "/src/report_semgrep.json"
                             }
                         }
                     }
@@ -102,10 +102,10 @@ pipeline {
                                         -P "$(pwd)/src" \
                                         -e="true" \
                                         -o="json" \
-                                        -O=/src/report_horusec.json || true
+                                        -O=report_horusec.json || true
                                 '''
-                                //stash includes: 'report_horusec.json', name: 'report_horusec.json'
-                                archiveArtifacts artifacts: "/src/report_horusec.json"
+                                stash includes: 'report_horusec.json', name: 'report_horusec.json'
+                                //archiveArtifacts artifacts: "/src/report_horusec.json"
                             }
                         }
                     }
