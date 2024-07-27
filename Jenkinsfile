@@ -63,6 +63,7 @@ pipeline {
             }
         }*/
 
+        /*
         stage('SonarQube'){
             environment {
                 scannerHome = tool 'sonar-scanner'
@@ -73,12 +74,12 @@ pipeline {
                 }
             }
 
-        }
+        }*/
 
         stage('Build') {
             steps {
                 echo 'Compilando el código...'
-                sh "docker build -t "
+                sh "docker build -t $REGISTRY/$REPO:$VERSION ."
             }
         }
 
@@ -94,14 +95,16 @@ pipeline {
             }
         }
 
+        /*
         stage('Docker Build') {
             steps {
                 script {
                     sh "docker build -t $REGISTRY/$REPO:$VERSION ."
                 }
             }
-        }
+        }*/
 
+        /*
         stage('Trivy-Scan') {
             agent {
                 docker {
@@ -128,6 +131,7 @@ pipeline {
                     //'''
                 }
             }
-        }                  
+        }   
+        */               
     }
 }
