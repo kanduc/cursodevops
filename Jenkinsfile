@@ -83,6 +83,23 @@ pipeline {
             }
         }
 
+        stage('Trivy-Scan') {
+            agent {
+                docker {
+                    image 'aquasec/trivy:0.48.1'
+                    args '--entrypoint="" -u root -v /var/run/docker.sock:/var/run/docker.sock -v ${WORKSPACE}:/src'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    script {
+                        sh "trivy image --format json --output report_trivy.json $REGISTRY/$REPO:$VERSION"
+                        archiveArtifacts artifacts: "report_trivy.json"
+                    }
+                }
+            }
+        }
+
         stage('Pruebas') {
             steps {
                 echo 'Ejecutando pruebas...'
