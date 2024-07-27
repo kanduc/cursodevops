@@ -30,6 +30,7 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             script {
                                 sh "gitleaks detect --verbose --source . -f json -r /src/report_gitleaks.json"
+                                sh "ls -la"
                                 archiveArtifacts artifacts: "/src/report_gitleaks.json"
                                 //stash includes: 'report_gitleaks.json', name: 'report_gitleaks.json'
                             }
