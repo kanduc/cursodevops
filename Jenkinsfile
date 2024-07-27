@@ -39,13 +39,13 @@ pipeline {
             agent {
                 docker {
                     image 'node:18-alpine'
-                    args '-u root:root -v ${WORKSPACE}:/src'
+                    args '-u root:root'
                 }
             }                    
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script {
-                        sh "npm audit --json > report_npmaudit.json"
+                        sh "npm audit -audit-level=moderate --json > /src/report_npmaudit.json"
                         sh "ls -la"
                         archiveArtifacts artifacts: "report_npmaudit.json"
                         //stash includes: 'report_npmaudit.json', name: 'report_npmaudit.json'
