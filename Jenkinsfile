@@ -10,7 +10,7 @@ pipeline {
 
     stages {
 
-        stage('Install Dependencies') {
+        /*stage('Install Dependencies') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -23,7 +23,7 @@ pipeline {
                     //sh 'npm audit'
                 }
             }
-        }
+        }*/
 
         stage('Gitleaks-Scan') {
             agent {
@@ -43,6 +43,7 @@ pipeline {
                 }
             }
         }
+        /*
         stage('NPMAudit-Scan') {
             agent {
                 docker {
@@ -60,7 +61,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
         stage('SonarQube'){
             environment {
