@@ -13,6 +13,7 @@ pipeline {
             steps {
                 script {
                     sh 'npm install'
+                    sh 'npm audit'
                 }
             }
         }
@@ -69,6 +70,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Compilando el código...'
+                sh "docker build -t "
             }
         }
 
