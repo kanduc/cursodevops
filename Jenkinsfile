@@ -3,7 +3,7 @@ pipeline {
 
     stages {
 
-        /*stage('Install Dependencies') {
+        stage('Install Dependencies') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -15,7 +15,7 @@ pipeline {
                     sh 'npm install'
                 }
             }
-        }*/
+        }
 
         stage('Gitleaks-Scan') {
             agent {
