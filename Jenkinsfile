@@ -46,6 +46,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script {
                         sh "npm audit --json > report_npmaudit.json"
+                        sh "ls -la"
                         archiveArtifacts artifacts: "report_npmaudit.json"
                         //stash includes: 'report_npmaudit.json', name: 'report_npmaudit.json'
                     }
