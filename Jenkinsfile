@@ -118,9 +118,10 @@ pipeline {
  
                     sh '''
                         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-                        docker push ${DOCKER_HUB_REGISTRY}/${IMAGE_NAME}:${VERSION_TAG}
+                        
                     '''
                 }
+                sh "docker push $DOCKER_HUB_REGISTRY/$IMAGE_NAME:$VERSION_TAG"
             }
         }
 
