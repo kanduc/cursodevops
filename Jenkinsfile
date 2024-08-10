@@ -192,6 +192,11 @@ pipeline {
                 }
             }
         }   
-        */               
+        */  
+        stage ('post-despliegue') {
+            steps {
+                cleanWs()
+            }
+        }             
     }
 }
