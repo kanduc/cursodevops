@@ -156,7 +156,7 @@ pipeline {
                             sh "git checkout -b master"
                             sh "git branch"
 
-                            sh "git remote add azure https://\\${WEBAPP_USERNAME}:${WEBAPP_PASSWORD}@myfirstwebappnode.scm.azurewebsites.net:443"
+                            sh "git remote add azure https://\\${WEBAPP_USERNAME}:${WEBAPP_PASSWORD}@myfirstwebappnode.scm.azurewebsites.net:443/myfirstwebappnode.git"
                             sh "git push -u azure master -f" 
 
                         }
