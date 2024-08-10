@@ -77,12 +77,21 @@ pipeline {
         }*/
 
         stage('Build') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    args '-u root:root -v ${WORKSPACE}:/src'
+                }
+            }
             steps {
                 echo 'Compilando el código...'
-                sh "docker build -t $REGISTRY/$REPO:$VERSION ."
+                //sh "docker build -t $REGISTRY/$REPO:$VERSION ."
+                sh "node src/index.js"
+                //sh "npm install "
             }
         }
 
+        /*
         stage('Trivy-Scan') {
             agent {
                 docker {
@@ -98,7 +107,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
         stage('Pruebas') {
             steps {
@@ -109,19 +118,17 @@ pipeline {
         stage('Despliegue') {
             steps {
                 echo 'Desplegando la aplicación...'
-                echo 'Docker push'
- 
-                withCredentials([usernamePassword(
-                    credentialsId:"docker-hub-user", 
-                    usernameVariable: "DOCKER_USERNAME", 
-                    passwordVariable: "DOCKER_PASSWORD")]){
- 
-                    sh '''
-                        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-                        docker push $REGISTRY/$REPO:$VERSION
-                    '''
+                script {
+                    withCredentials([azureServicePrincipal('sp-iac-azure')]){
+                        echo "Iniciando sesion Azure"
+
+                        sh "az account clear"
+                        sh "az login --service-principal --username ${AZURE_CLIENT_ID} --password ${AZURE_CLIENT_SECRET} --tenant ${AZURE_TENANT_ID}"
+                        sh "az account set --subscription ${AZURE_SUBSCRIPTION_ID}"
+
+                        sh "az webapp update"
+                    }
                 }
-                //sh "docker push $DOCKER_HUB_REGISTRY/$IMAGE_NAME:$VERSION_TAG"
             }
         }
 
