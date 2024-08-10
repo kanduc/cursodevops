@@ -10,6 +10,12 @@ pipeline {
 
     stages {
 
+        stage ('pre-despliegue') {
+            steps {
+                cleanWs()
+            }
+        }
+
         stage('Scaneo Datos Sensibles') {
             agent {
                 docker {
@@ -85,6 +91,12 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+
+        stage ('post-despliegue') {
+            steps {
+                cleanWs()
             }
         }
              
