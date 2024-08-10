@@ -197,10 +197,18 @@ pipeline {
             }
         }   
         */  
-        stage ('post-despliegue') {
+        /*stage ('post-despliegue') {
             steps {
                 cleanWs()
             }
-        }             
+        } */            
+    }
+
+    post {
+        always {
+            script {
+                cleanWs()   
+            }
+        }
     }
 }
