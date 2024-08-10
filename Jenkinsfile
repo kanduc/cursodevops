@@ -118,6 +118,12 @@ pipeline {
         }
 
         stage('Despliegue') {
+            agent {
+                docker {
+                    image 'jenkins-ansible:1.0.0'
+                    args '--entrypoint="" -u root -v ${WORKSPACE}:/src'
+                }
+            } 
             steps {
                 echo 'Desplegando la aplicación...'
                 script {
