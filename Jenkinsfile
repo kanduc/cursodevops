@@ -144,7 +144,7 @@ pipeline {
                             sh "git remote add azure https://\\${WEBAPP_USERNAME}:${WEBAPP_PASSWORD}@myfirstwebappnode.scm.azurewebsites.net:443"
                             sh "git config --local user.email \"myapp@example.com\""
                             sh "git config --local user.name \"myapp\""
-                            sh "git add ."
+                            sh "git add *"
                             sh "git commit -m \"Initial commit\""
                             sh "git push azure master -f"
 
