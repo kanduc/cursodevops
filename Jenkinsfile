@@ -87,6 +87,7 @@ pipeline {
                 echo 'Compilando el código...'
                 //sh "docker build -t $REGISTRY/$REPO:$VERSION ."
                 sh "npm install "
+                sh "node build"
                 //sh "node src/index.js"
                 sh "ls -la"
 
@@ -134,10 +135,23 @@ pipeline {
                         sh "az login --service-principal --username ${AZURE_CLIENT_ID} --password ${AZURE_CLIENT_SECRET} --tenant ${AZURE_TENANT_ID}"
                         sh "az account set --subscription ${AZURE_SUBSCRIPTION_ID}"
 
-                        sh "az webapp update --resource-group myResourceGroupAppNode --name myfirstWebAppNode"
+                        //sh "az webapp update --resource-group myResourceGroupAppNode --name myfirstWebAppNode"
+                        withCredentials([usernamePassword(
+                            credentialsId:"user-deploy-webapp", 
+                            usernameVariable: "WEBAPP_USERNAME", 
+                            passwordVariable: "WEBAPP_PASSWORD")]){
+                            sh "git init"
+                            sh "git remote add azure https://\\${WEBAPP_USERNAME}:${WEBAPP_PASSWORD}@myfirstwebappnode.scm.azurewebsites.net:443"
+                            sh "git config --local user.email \"myapp@example.com\""
+                            sh "git config --local user.name \"myapp\""
+                            sh "git add ."
+                            sh "git commit -m \"Initial commit\""
+                            sh "git push azure master -f"
+
+                        }
                     }
                 }
-            }
+            } 
         }
 
         /*
