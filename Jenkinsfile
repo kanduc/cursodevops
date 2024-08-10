@@ -122,7 +122,7 @@ pipeline {
             agent {
                 docker {
                     image 'jenkins-ansible:1.0.0'
-                    args '--entrypoint="" -u root -v ${WORKSPACE}:/src'
+                    args '--entrypoint="" -u root'
                 }
             } 
             steps {
@@ -152,11 +152,12 @@ pipeline {
                             sh "git branch"
 
                             sh "git commit -m \"Initial commit\""
-                            sh "git branch -M master"
+                            //sh "git branch -M master"
+                            sh "git checkout -b master"
                             sh "git branch"
 
                             sh "git remote add azure https://\\${WEBAPP_USERNAME}:${WEBAPP_PASSWORD}@myfirstwebappnode.scm.azurewebsites.net:443"
-                            sh "git push azure master -f" 
+                            sh "git push -u azure master -f" 
 
                         }
                     }
