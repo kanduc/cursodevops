@@ -140,15 +140,10 @@ pipeline {
                             credentialsId:"user-deploy-webapp", 
                             usernameVariable: "WEBAPP_USERNAME", 
                             passwordVariable: "WEBAPP_PASSWORD")]){
-                            sh "ls -la"
                             sh "git init"
-                            sh "git status"
-                            
-                            sh "git status"
                             sh "git config --local user.email \"myapp@example.com\""
                             sh "git config --local user.name \"myapp\""
                             sh "git add *"
-                            sh "git status"
                             sh "git commit -m \"Initial commit\""
                             sh "git checkout -b master"
                             sh "git remote add azure https://\\${WEBAPP_USERNAME}:${WEBAPP_PASSWORD}@myfirstwebappnode.scm.azurewebsites.net:443/myfirstwebappnode.git"
