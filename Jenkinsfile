@@ -86,7 +86,7 @@ pipeline {
             steps {
                 echo 'Compilando el código...'
                 //sh "docker build -t $REGISTRY/$REPO:$VERSION ."
-                sh "npm install "
+                //sh "npm install "
                 //sh "node build"
                 //sh "node src/index.js"
                 sh "ls -la"
@@ -149,13 +149,8 @@ pipeline {
                             sh "git config --local user.name \"myapp\""
                             sh "git add *"
                             sh "git status"
-                            sh "git branch"
-
                             sh "git commit -m \"Initial commit\""
-                            //sh "git branch -M master"
                             sh "git checkout -b master"
-                            sh "git branch"
-
                             sh "git remote add azure https://\\${WEBAPP_USERNAME}:${WEBAPP_PASSWORD}@myfirstwebappnode.scm.azurewebsites.net:443/myfirstwebappnode.git"
                             sh "git push -u azure master -f" 
 
