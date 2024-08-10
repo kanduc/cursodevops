@@ -150,8 +150,10 @@ pipeline {
                             sh "git add *"
                             sh "git status"
                             sh "git branch"
-                            sh "git branch -M main"
+
                             sh "git commit -m \"Initial commit\""
+                            sh "git branch -M master"
+                            sh "git branch"
                             sh "git push azure master -f" 
 
                         }
