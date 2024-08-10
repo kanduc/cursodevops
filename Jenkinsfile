@@ -87,7 +87,7 @@ pipeline {
                 echo 'Compilando el código...'
                 //sh "docker build -t $REGISTRY/$REPO:$VERSION ."
                 sh "npm install "
-                sh "node build"
+                //sh "node build"
                 //sh "node src/index.js"
                 sh "ls -la"
 
