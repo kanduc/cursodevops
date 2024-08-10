@@ -145,6 +145,7 @@ pipeline {
                             sh "git config --local user.email \"myapp@example.com\""
                             sh "git config --local user.name \"myapp\""
                             sh "git add *"
+                            sh "git status"
                             sh "git commit -m \"Initial commit\""
                             sh "git push azure master -f" 
 
