@@ -151,7 +151,7 @@ pipeline {
                             sh "git status"
                             sh "git branch"
                             sh "git commit -m \"Initial commit\""
-                            sh "git push azure main -f" 
+                            sh "git push azure main:master -f" 
 
                         }
                     }
