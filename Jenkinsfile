@@ -146,7 +146,7 @@ pipeline {
                             sh "git config --local user.name \"myapp\""
                             sh "git add *"
                             sh "git commit -m \"Initial commit\""
-                            sh "git push azure master -f"
+                            sh "git push azure master -f" 
 
                         }
                     }
