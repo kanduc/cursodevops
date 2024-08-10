@@ -134,7 +134,7 @@ pipeline {
                         sh "az login --service-principal --username ${AZURE_CLIENT_ID} --password ${AZURE_CLIENT_SECRET} --tenant ${AZURE_TENANT_ID}"
                         sh "az account set --subscription ${AZURE_SUBSCRIPTION_ID}"
 
-                        sh "az webapp update"
+                        sh "az webapp update --resource-group myResourceGroupAppNode --name myfirstWebAppNode"
                     }
                 }
             }
